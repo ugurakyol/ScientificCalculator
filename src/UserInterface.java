@@ -195,6 +195,7 @@ public class UserInterface extends JFrame {
         switch (value) {
             case "+": /* Finds the addition  */
                 operatorKey = '+';
+                break;
             case "-": /* Finds the subtraction  */
                 operatorKey = '-';
                 break;
