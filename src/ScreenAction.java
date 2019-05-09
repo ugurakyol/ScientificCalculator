@@ -1,6 +1,6 @@
-public class Action {
+public class ScreenAction {
 
-    Variables variables = new Variables();
+    Status status = new Status();
 
     public String enterNumber(String screen, String key){
 
@@ -39,19 +39,19 @@ public class Action {
 
 
     public void setScreen(String key){
-        Visual visual = new Visual();
+        UserInterface userInterface = new UserInterface();
         String string = "";
-        if (variables.getNumber2() == 0 && variables.getOperator()!=' ' && variables.isScreenFlag() == false ){
-            visual.setTextField1("");
+        if (status.getNumber2() == 0 && status.getOperator()!=' ' && status.isScreenFlag() == false ){
+            userInterface.setTextField1("");
             //textField1.setText("");
-            variables.setScreenFlag(true);
-            string = enterNumber(visual.getTextField1().getText(),key);
-            visual.getTextField1().setText(string);
+            status.setScreenFlag(true);
+            string = enterNumber(userInterface.getTextField1().getText(),key);
+            userInterface.getTextField1().setText(string);
 
         }else {
 
-            string = enterNumber(visual.getTextField1().getText(),key);
-            visual.getTextField1().setText(string);
+            string = enterNumber(userInterface.getTextField1().getText(),key);
+            userInterface.getTextField1().setText(string);
         }
     }
 

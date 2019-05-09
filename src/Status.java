@@ -1,4 +1,4 @@
-public class Variables {
+public class Status {
 
     protected String string = new String();
     protected char OnOff = 'A';

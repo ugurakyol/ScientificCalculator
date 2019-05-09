@@ -1,16 +1,14 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
-import java.awt.event.MouseEvent;
 
 
-public class Visual extends JFrame {
+public class UserInterface extends JFrame {
 
     Calculation calculation = new Calculation();
-    Action action = new Action();
-    Variables variables = new Variables();
+    ScreenAction screenAction = new ScreenAction();
+    Status status = new Status();
 
     Color myGreen = new Color(46, 204, 113);
     Color myRed = new Color(242, 38, 19);
@@ -54,7 +52,7 @@ public class Visual extends JFrame {
     private JButton buttonExp;
     private JButton Significant;
 
-    public Visual()  {
+    public UserInterface()  {
 
         onOffButton.addActionListener(this::switchPerformed);
         n1Button.addActionListener(this::NumberEnterance);
@@ -91,22 +89,22 @@ public class Visual extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                if (!textField1.getText().equals("") && variables.getOperator() != ' '){
+                if (!textField1.getText().equals("") && status.getOperator() != ' '){
 
                     getTextField1().setText("");
-                    variables.setScreenFlag(false);
+                    status.setScreenFlag(false);
 
-                } else if (textField1.getText().equals("") && variables.getOperator() != ' ' ){
+                } else if (textField1.getText().equals("") && status.getOperator() != ' ' ){
 
-                    variables.setOperator(' ');
+                    status.setOperator(' ');
                 }
                 else {
 
                     getTextField1().setText("");
-                    variables.setScreenFlag(false);
-                    variables.setOperator(' ');
-                    variables.setNumber1(0);
-                    variables.setNumberFlag(true);
+                    status.setScreenFlag(false);
+                    status.setOperator(' ');
+                    status.setNumber1(0);
+                    status.setNumberFlag(true);
                 }
 
             }
@@ -116,11 +114,11 @@ public class Visual extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 getTextField1().setText("");
-                variables.setNumber1(0);
-                variables.setOperator(' ');
-                variables.setNumber2(0);
-                variables.setScreenFlag(false);
-                variables.setNumberFlag(true);
+                status.setNumber1(0);
+                status.setOperator(' ');
+                status.setNumber2(0);
+                status.setScreenFlag(false);
+                status.setNumberFlag(true);
             }
         });
         EquvalanceButton.addActionListener(new ActionListener() {
@@ -134,55 +132,55 @@ public class Visual extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (textField1.getText().equals("") && variables.isNumberPositive()){
+                if (textField1.getText().equals("") && status.isNumberPositive()){
                     // convert to negative
                     textField1.setText("-");
-                    variables.setNumberFlag(false);
+                    status.setNumberFlag(false);
                     Significant.setText("-/+");
 
-                } else if (textField1.getText().equals("") && !variables.isNumberPositive()){
+                } else if (textField1.getText().equals("") && !status.isNumberPositive()){
                     // convert to positive
                     textField1.setText("");
-                    variables.setNumberFlag(true);
+                    status.setNumberFlag(true);
                     Significant.setText("+/-");
 
                 } else if (textField1.getText().equals("-")){
                     // convert to negative
                     textField1.setText("");
-                    variables.setNumberFlag(true);
+                    status.setNumberFlag(true);
                     Significant.setText("+/-");
 
-                } else if (variables.getNumber1() == 0 && variables.isNumberPositive()) {
+                } else if (status.getNumber1() == 0 && status.isNumberPositive()) {
                     // convert to negative
                     textField1.setText(String.valueOf(-1 * Double.parseDouble(textField1.getText())));
-                    variables.setNumberFlag(false);
+                    status.setNumberFlag(false);
                     Significant.setText("-/+");
-                } else if (variables.getNumber1() == 0 && !variables.isNumberPositive()) {
+                } else if (status.getNumber1() == 0 && !status.isNumberPositive()) {
                     // convert to positive
                     textField1.setText(String.valueOf(-1 * Double.parseDouble(textField1.getText())));
-                    variables.setNumberFlag(true);
+                    status.setNumberFlag(true);
                     Significant.setText("+/-");
-                }  else if ((variables.getNumber1() == Double.parseDouble(textField1.getText())) && variables.isNumberPositive()) {
+                }  else if ((status.getNumber1() == Double.parseDouble(textField1.getText())) && status.isNumberPositive()) {
                     // convert to negative
-                    variables.setNumber1(-1 * Double.parseDouble(textField1.getText()));
-                    textField1.setText(String.valueOf(variables.getNumber1()));
-                    variables.setNumberFlag(false);
+                    status.setNumber1(-1 * Double.parseDouble(textField1.getText()));
+                    textField1.setText(String.valueOf(status.getNumber1()));
+                    status.setNumberFlag(false);
                     Significant.setText("-/+");
-                } else if ((variables.getNumber1() == Double.parseDouble(textField1.getText())) && !variables.isNumberPositive()) {
+                } else if ((status.getNumber1() == Double.parseDouble(textField1.getText())) && !status.isNumberPositive()) {
                     // convert to positive
-                    variables.setNumber1(-1 * Double.parseDouble(textField1.getText()));
-                    textField1.setText(String.valueOf(variables.getNumber1()));
-                    variables.setNumberFlag(true);
+                    status.setNumber1(-1 * Double.parseDouble(textField1.getText()));
+                    textField1.setText(String.valueOf(status.getNumber1()));
+                    status.setNumberFlag(true);
                     Significant.setText("+/-");
-                }else if (!(variables.getNumber1() == Double.parseDouble(textField1.getText())) && variables.isNumberPositive()) {
+                }else if (!(status.getNumber1() == Double.parseDouble(textField1.getText())) && status.isNumberPositive()) {
                     // convert to negative
                     textField1.setText(String.valueOf(-1 * Double.parseDouble(textField1.getText())));
-                    variables.setNumberFlag(false);
+                    status.setNumberFlag(false);
                     Significant.setText("-/+");
-                } else if (!(variables.getNumber1() == Double.parseDouble(textField1.getText())) && !variables.isNumberPositive()) {
+                } else if (!(status.getNumber1() == Double.parseDouble(textField1.getText())) && !status.isNumberPositive()) {
                     // convert to positive
                     textField1.setText(String.valueOf(-1 * Double.parseDouble(textField1.getText())));
-                    variables.setNumberFlag(true);
+                    status.setNumberFlag(true);
                     Significant.setText("+/-");
                 }
             }
@@ -241,53 +239,53 @@ public class Visual extends JFrame {
                 break;
         }
         System.out.println(operatorKey + " ");
-        if (variables.getOperator() == ' ') {
+        if (status.getOperator() == ' ') {
 
             if(operatorKey == 'A' && operatorKey == 'C' && operatorKey == 'D' && operatorKey == 'E' && operatorKey == 'F' && operatorKey == 'G' && operatorKey == 'H' && operatorKey == 'J' && operatorKey == 'K'){
 
                 getFirstNumber();
-                variables.setOperator(operatorKey);
+                status.setOperator(operatorKey);
                 Calculate();
-                variables.setOperator(' ');
+                status.setOperator(' ');
 
             } else if (operatorKey =='-'){
 
                 if (textField1.getText().equals("")) {
 
-                    variables.setNumberFlag(false);
+                    status.setNumberFlag(false);
                     textField1.setText(String.valueOf(operatorKey));
 
-                } else if (variables.getOperator() == ' ') {
+                } else if (status.getOperator() == ' ') {
 
                     getFirstNumber();
-                    variables.setOperator(operatorKey);
+                    status.setOperator(operatorKey);
 
                 } else {
 
                     getSecondNumber();
                     Calculate();
-                    variables.setOperator(operatorKey);
+                    status.setOperator(operatorKey);
                 }
 
-            } else if (variables.getNumber1() != 0 && !(operatorKey =='-')) {
+            } else if (status.getNumber1() != 0 && !(operatorKey =='-')) {
 
-                variables.setOperator(operatorKey);
+                status.setOperator(operatorKey);
 
             } else {
                 getFirstNumber();
-                variables.setOperator(operatorKey);
+                status.setOperator(operatorKey);
             }
         } else {
 
             getSecondNumber();
             Calculate();
-            variables.setOperator(operatorKey);
+            status.setOperator(operatorKey);
         }
     }
 
     public void NumberEnterance (ActionEvent e) {
 
-        if ( action.checkScreen(textField1.getText(),'.') == false){
+        if ( screenAction.checkScreen(textField1.getText(),'.') == false){
 
             String value = e.getActionCommand();
             System.out.println(value + "\n");
@@ -318,19 +316,19 @@ public class Visual extends JFrame {
     public void switchPerformed(ActionEvent e) {
         //On/Off Button
 
-        switch (variables.getOnOff()){
+        switch (status.getOnOff()){
 
-            case 'A': variables.setOnOff('P');
+            case 'A': status.setOnOff('P');
                 Keypad.setVisible(false);
                 onOffButton.setText("On");
                 onOffButton.setBackground(myGreen);
                 getTextField1().setText(" Calculator Closed");
-                variables.setNumber1(0);
-                variables.setOperator(' ');
-                variables.setNumber2(0);
-                variables.setScreenFlag(false);
+                status.setNumber1(0);
+                status.setOperator(' ');
+                status.setNumber2(0);
+                status.setScreenFlag(false);
                 break;
-            case 'P': variables.setOnOff('A');
+            case 'P': status.setOnOff('A');
                 Keypad.setVisible(true);
                 onOffButton.setText("Off");
                 onOffButton.setBackground(myRed);
@@ -342,17 +340,17 @@ public class Visual extends JFrame {
     public void setScreen(String key){
 
         String screenValue;
-        if (variables.getNumber2() == 0 && variables.getOperator()!=' ' && variables.isScreenFlag() == true ){
+        if (status.getNumber2() == 0 && status.getOperator()!=' ' && status.isScreenFlag() == true ){
 
             textField1.setText("");
-            variables.setScreenFlag(false);
-            //string = action.enterNumber(textField1.getText(),key);
+            status.setScreenFlag(false);
+            //string = screenAction.enterNumber(textField1.getText(),key);
             screenValue = key;
             textField1.setText(screenValue);
 
         }else {
 
-            screenValue = action.enterNumber(textField1.getText(),key);
+            screenValue = screenAction.enterNumber(textField1.getText(),key);
             textField1.setText(screenValue);
         }
     }
@@ -361,102 +359,102 @@ public class Visual extends JFrame {
 
         System.out.println("got in result");
 
-        variables.setScreenFlag(false);
+        status.setScreenFlag(false);
 
-        switch (variables.getOperator()) {
+        switch (status.getOperator()) {
 
             case '+': /* Finds the addition  */
-                variables.setResult(variables.getNumber1() + variables.getNumber2());
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(status.getNumber1() + status.getNumber2());
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case '-': /* Finds the subtraction */
-                variables.setResult(variables.getNumber1() - variables.getNumber2());
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(status.getNumber1() - status.getNumber2());
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case '*': /* Finds the multiplication */
-                variables.setResult(variables.getNumber1() * variables.getNumber2());
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(status.getNumber1() * status.getNumber2());
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case '/': /* Finds the division */
-                variables.setResult(variables.getNumber1() / variables.getNumber2());
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);;
+                status.setResult(status.getNumber1() / status.getNumber2());
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);;
                 break;
             case '√': /* Finds the square root */
                 //result = number1 * Math.sqrt(number2);
-                variables.setResult(variables.getNumber1() * Math.sqrt(variables.getNumber2()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(status.getNumber1() * Math.sqrt(status.getNumber2()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'A': /* Finds the absolute value of a number */
                 //result = Math.abs(number1);
-                variables.setResult(Math.abs(variables.getNumber1()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(Math.abs(status.getNumber1()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'B': /* Finds the number1 to power of number2 */
                 //result = Math.pow(number1 , number2);
-                variables.setResult(Math.pow(variables.getNumber1(), variables.getNumber2()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(Math.pow(status.getNumber1(), status.getNumber2()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'C': /* Finds the factorial of number1 */
                 //result = calculation.Factorial(number1);
-                variables.setResult(calculation.Factorial(variables.getNumber1()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(calculation.Factorial(status.getNumber1()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'D': /* Finds the number1 to power of 2 */
                 //result = Math.pow(number1 , 2);
-                variables.setResult(Math.pow(variables.getNumber1() , 2));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(Math.pow(status.getNumber1() , 2));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'E': /* Finds the exponential of number */
                 //result = Math.exp(number1);
-                variables.setResult(Math.exp(variables.getNumber1()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(Math.exp(status.getNumber1()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'F': /* Finds the ln */
                 //result = Math.log(number1);
-                variables.setResult( Math.log( variables.getNumber1()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult( Math.log( status.getNumber1()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'G': /* Finds sin of number */
                 //result = Math.sin(Math.toRadians(number1));
-                variables.setResult( Math.sin( Math.toRadians(variables.getNumber1())));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult( Math.sin( Math.toRadians(status.getNumber1())));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'H': /* Finds the cosine of number */
                 //result = Math.cos(Math.toRadians(number1));
-                variables.setResult( Math.cos( Math.toRadians(variables.getNumber1())));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult( Math.cos( Math.toRadians(status.getNumber1())));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'J': /* Finds the tangent of number */
                 //result = Math.tan(Math.toRadians(number1));
-                variables.setResult( Math.tan( Math.toRadians(variables.getNumber1())));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult( Math.tan( Math.toRadians(status.getNumber1())));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
             case 'K': /* Finds the exponential of number */
                 //result = Math.log10(number1);
-                variables.setResult(Math.log10(variables.getNumber1()));
-                variables.setNumber1(variables.getResult());
-                variables.setNumber2(0);
+                status.setResult(Math.log10(status.getNumber1()));
+                status.setNumber1(status.getResult());
+                status.setNumber2(0);
                 break;
         }
     }
 
     public void Calculate(){
 
-        if (variables.getOperator() == ' '){
+        if (status.getOperator() == ' '){
 
             getFirstNumber();
 
@@ -467,28 +465,28 @@ public class Visual extends JFrame {
 
             getResult();
 
-            textField1.setText(String.valueOf(variables.getNumber1()));
+            textField1.setText(String.valueOf(status.getNumber1()));
         }
     }
 
     public void getFirstNumber(){
 
-        if (variables.isNumberPositive() == false){
+        if (status.isNumberPositive() == false){
 
-                variables.setNumber1(Double.parseDouble(textField1.getText()));
-                variables.setNumberFlag(true);
-                variables.setScreenFlag(true);
+                status.setNumber1(Double.parseDouble(textField1.getText()));
+                status.setNumberFlag(true);
+                status.setScreenFlag(true);
 
         } else {
 
-            variables.setNumber1(Double.parseDouble(textField1.getText()));
-            variables.setScreenFlag(true);
+            status.setNumber1(Double.parseDouble(textField1.getText()));
+            status.setScreenFlag(true);
         }
     }
 
     public void getSecondNumber(){
 
-            variables.setNumber2(Double.parseDouble(textField1.getText()));
+            status.setNumber2(Double.parseDouble(textField1.getText()));
     }
 
     public JPanel getMainpanel() {

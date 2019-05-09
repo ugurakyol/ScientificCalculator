@@ -8,7 +8,7 @@ public class Main {
         // Form was created here
 
         JFrame frame = new JFrame("Scientific Calculator");
-        frame.setContentPane(new Visual().getMainpanel());
+        frame.setContentPane(new UserInterface().getMainpanel());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
